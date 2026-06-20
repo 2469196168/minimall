@@ -1,0 +1,198 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// ===================================================================
+//  用户
+// ===================================================================
+model User {
+  id            String         @id @default(cuid())
+  email         String         @unique
+  name          String
+  passwordHash  String
+  role          String         @default("CUSTOMER")
+  avatar        String?
+  phone         String?
+  cartItems     CartItem[]
+  wishlistItems WishlistItem[]
+  reviews       Review[]
+  addresses     Address[]
+  orders        Order[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+}
+
+// ===================================================================
+//  分类
+// ===================================================================
+model Category {
+  id        String    @id @default(cuid())
+  name      String    @unique
+  slug      String    @unique
+  icon      String?
+  sortOrder Int       @default(0)
+  products  Product[]
+  createdAt DateTime  @default(now())
+}
+
+// ===================================================================
+//  商品
+// ===================================================================
+model Product {
+  id             String         @id @default(cuid())
+  name           String
+  slug           String         @unique
+  description    String
+  price          Float
+  compareAtPrice Float?
+  images         String         // JSON string: ["url1","url2"]
+  categoryId     String?
+  category       Category?      @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  inventory      Int            @default(0)
+  salesCount     Int            @default(0)
+  isActive       Boolean        @default(true)
+  isFeatured     Boolean        @default(false)
+  cartItems      CartItem[]
+  wishlistItems  WishlistItem[]
+  orderItems     OrderItem[]
+  reviews        Review[]
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+}
+
+// ===================================================================
+//  购物车
+// ===================================================================
+model CartItem {
+  id        String   @id @default(cuid())
+  quantity  Int
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([userId, productId])
+}
+
+// ===================================================================
+//  收藏/心愿单
+// ===================================================================
+model WishlistItem {
+  id        String   @id @default(cuid())
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([userId, productId])
+}
+
+// ===================================================================
+//  评价
+// ===================================================================
+model Review {
+  id        String   @id @default(cuid())
+  rating    Int
+  content   String?
+  images    String?  // JSON string for review photos
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([userId, productId])
+}
+
+// ===================================================================
+//  收货地址
+// ===================================================================
+model Address {
+  id        String  @id @default(cuid())
+  userId    String
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name      String
+  phone     String
+  province  String
+  city      String
+  district  String
+  detail    String
+  isDefault Boolean @default(false)
+  orders    Order[]
+  createdAt DateTime @default(now())
+}
+
+// ===================================================================
+//  订单
+// ===================================================================
+model Order {
+  id              String      @id @default(cuid())
+  orderNo         String      @unique
+  userId          String
+  user            User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  status          String      @default("PENDING")
+  total           Float
+  addressId       String?
+  address         Address?    @relation(fields: [addressId], references: [id], onDelete: SetNull)
+  addressSnapshot String?     // JSON snapshot of shipping address
+  couponId        String?
+  coupon          Coupon?     @relation(fields: [couponId], references: [id], onDelete: SetNull)
+  discount        Float       @default(0)
+  note            String?
+  items           OrderItem[]
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+}
+
+// ===================================================================
+//  订单明细
+// ===================================================================
+model OrderItem {
+  id        String  @id @default(cuid())
+  orderId   String
+  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+  quantity  Int
+  price     Float   // Price snapshot at purchase time
+}
+
+// ===================================================================
+//  优惠券
+// ===================================================================
+model Coupon {
+  id             String   @id @default(cuid())
+  code           String   @unique
+  name           String
+  type           String   // "FIXED" | "PERCENT"
+  value          Float
+  minOrderAmount Float    @default(0)
+  usageLimit     Int      @default(0) // 0 = unlimited
+  usedCount      Int      @default(0)
+  isActive       Boolean  @default(true)
+  validFrom      DateTime @default(now())
+  validUntil     DateTime
+  orders         Order[]
+  createdAt      DateTime @default(now())
+}
+
+// ===================================================================
+//  轮播图
+// ===================================================================
+model Banner {
+  id        String   @id @default(cuid())
+  title     String
+  image     String
+  link      String?
+  sortOrder Int      @default(0)
+  isActive  Boolean  @default(true)
+  position  String   @default("HOME")
+  createdAt DateTime @default(now())
+}

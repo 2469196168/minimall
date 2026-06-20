@@ -1,0 +1,28 @@
+{
+  "enabledPlugins": {
+    "superpowers-zh@skills-dir": true
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|clear|compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PROJECT_DIR}/.claude/skills/superpowers-zh/hooks/session-start\"",
+            "async": false
+          }
+        ]
+      }
+    ]
+  },
+  "permissions": {
+    "allow": [
+      "Bash(npm --version)",
+      "Bash(npx create-next-app@latest . --typescript --tailwind --eslint --app --src-dir --import-alias \"@/*\" --turbopack --no-git)",
+      "Read(//e/Ai Coding/**)",
+      "Bash(npx create-next-app@latest \"mini-mall\" --typescript --tailwind --eslint --app --src-dir --import-alias \"@/*\" --turbopack --no-git)",
+      "Bash(bash \"${CLAUDE_PROJECT_DIR}/.claude/skills/superpowers-zh/hooks/session-start\")"
+    ]
+  }
+}
