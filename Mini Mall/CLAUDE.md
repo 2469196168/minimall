@@ -104,7 +104,8 @@ npm run db:studio    # 打开 Prisma Studio 管理界面
 
 - JWT + httpOnly Cookie 方案，不依赖第三方认证库
 - `src/lib/auth.ts` 提供 `signToken()`, `verifyToken()`, `getCurrentUser()`, `setTokenCookie()`, `removeTokenCookie()`
-- `middleware.ts` 保护 `/admin/*` 路由（待创建）
+- `proxy.ts` 保护 `/admin/*`、`/profile`、`/cart` 等路由，管理 API 鉴权
+- 登录/注册 API 含 IP 频率限制（内存级，生产建议换 Redis）
 - 密码使用 bcryptjs，salt rounds = 12
 
 ### 类型与校验
@@ -145,8 +146,8 @@ npm run db:studio    # 打开 Prisma Studio 管理界面
 
 ## 待实现功能
 
-- [ ] 商品列表/详情页
-- [ ] 用户注册/登录
+- [x] 商品列表/详情页
+- [x] 用户注册/登录
 - [ ] 购物车
 - [ ] 下单结算
 - [ ] 订单管理
@@ -155,4 +156,4 @@ npm run db:studio    # 打开 Prisma Studio 管理界面
 - [ ] 收货地址管理
 - [ ] 优惠券系统
 - [ ] Admin 后台管理
-- [ ] middleware 路由守卫
+- [x] proxy 路由守卫

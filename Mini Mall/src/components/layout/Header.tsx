@@ -1,4 +1,5 @@
 import Link from "next/link";
+import UserMenu from "./UserMenu";
 
 export function Header() {
   return (
@@ -41,12 +42,7 @@ export function Header() {
           >
             🛒 购物车
           </Link>
-          <Link
-            href="/login"
-            className="rounded-lg bg-indigo-600 px-4 py-1.5 text-white hover:bg-indigo-700"
-          >
-            登录
-          </Link>
+          <UserMenu />
         </nav>
       </div>
     </header>

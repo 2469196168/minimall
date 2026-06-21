@@ -2,7 +2,11 @@ import { SignJWT, jwtVerify } from "jose";
 import { cookies } from "next/headers";
 import { prisma } from "@/lib/prisma";
 
-const secret = new TextEncoder().encode(process.env.JWT_SECRET!);
+const secretKey = process.env.JWT_SECRET;
+if (!secretKey) {
+  throw new Error("Missing JWT_SECRET environment variable. Please set it in .env file.");
+}
+const secret = new TextEncoder().encode(secretKey);
 const TOKEN_NAME = "token";
 const TOKEN_MAX_AGE = 7 * 24 * 60 * 60; // 7 days in seconds
 
