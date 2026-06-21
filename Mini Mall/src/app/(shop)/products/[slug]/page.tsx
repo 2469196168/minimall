@@ -2,6 +2,8 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import StarRating from "@/components/ui/StarRating";
+import ProductImageGallery from "@/components/product/ProductImageGallery";
+import { safeParseImages, computeAvgRating } from "@/lib/utils";
 
 export default async function ProductDetailPage({
   params,
@@ -29,15 +31,8 @@ export default async function ProductDetailPage({
     notFound();
   }
 
-  const images: string[] = JSON.parse(product.images);
-  const mainImage = images[0] || "https://picsum.photos/800/800";
-
-  // 计算平均评分
-  const reviewRatings = product.reviews.map((r) => r.rating);
-  const avgRating =
-    reviewRatings.length > 0
-      ? reviewRatings.reduce((a, b) => a + b, 0) / reviewRatings.length
-      : 0;
+  // 使用共享工具函数计算平均评分
+  const avgRating = computeAvgRating(product.reviews);
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-8">
@@ -58,28 +53,8 @@ export default async function ProductDetailPage({
 
       {/* 左右分栏 */}
       <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-        {/* 左栏：图片 */}
-        <div>
-          <div className="aspect-square overflow-hidden rounded-xl bg-gray-100">
-            <img
-              src={mainImage}
-              alt={product.name}
-              className="h-full w-full object-cover"
-            />
-          </div>
-          {images.length > 1 && (
-            <div className="mt-3 flex gap-2">
-              {images.map((img, i) => (
-                <button
-                  key={i}
-                  className="h-16 w-16 overflow-hidden rounded-lg border-2 border-gray-200 hover:border-indigo-400"
-                >
-                  <img src={img} alt={`${product.name} ${i + 1}`} className="h-full w-full object-cover" />
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
+        {/* 左栏：图片（Client Component — 支持缩略图切换） */}
+        <ProductImageGallery images={product.images} productName={product.name} />
 
         {/* 右栏：商品信息 */}
         <div>
@@ -122,14 +97,14 @@ export default async function ProductDetailPage({
             )}
           </div>
 
-          {/* 操作按钮（占位） */}
+          {/* 操作按钮 — Phase 4 实现加购和购买交互 */}
           <div className="mt-6 flex gap-3">
-            <button className="flex-1 rounded-lg bg-indigo-600 px-6 py-3 font-medium text-white hover:bg-indigo-700 transition-colors">
+            <div className="flex-1 rounded-lg bg-indigo-600 px-6 py-3 text-center font-medium text-white transition-colors cursor-not-allowed opacity-80">
               加入购物车
-            </button>
-            <button className="flex-1 rounded-lg bg-red-600 px-6 py-3 font-medium text-white hover:bg-red-700 transition-colors">
+            </div>
+            <div className="flex-1 rounded-lg bg-red-600 px-6 py-3 text-center font-medium text-white transition-colors cursor-not-allowed opacity-80">
               立即购买
-            </button>
+            </div>
           </div>
         </div>
       </div>
@@ -173,7 +148,7 @@ export default async function ProductDetailPage({
                   )}
                   {review.images && (
                     <div className="mt-2 flex gap-2">
-                      {JSON.parse(review.images).map((img: string, i: number) => (
+                      {safeParseImages(review.images).map((img: string, i: number) => (
                         <img
                           key={i}
                           src={img}

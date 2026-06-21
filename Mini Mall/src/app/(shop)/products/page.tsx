@@ -6,6 +6,7 @@ import CategoryFilter from "@/components/product/CategoryFilter";
 import Pagination from "@/components/ui/Pagination";
 import SortSelect from "@/components/product/SortSelect";
 import type { ProductCardData } from "@/types";
+import { computeAvgRating } from "@/lib/utils";
 
 const PAGE_SIZE = 12;
 
@@ -69,26 +70,19 @@ export default async function ProductsPage({
     }),
   ]);
 
-  // 计算每个商品的平均评分
-  const productsWithRating: ProductCardData[] = products.map((p) => {
-    const ratings = p.reviews.map((r) => r.rating);
-    const avgRating =
-      ratings.length > 0
-        ? ratings.reduce((a, b) => a + b, 0) / ratings.length
-        : 0;
-    return {
-      id: p.id,
-      name: p.name,
-      slug: p.slug,
-      price: p.price,
-      compareAtPrice: p.compareAtPrice,
-      images: p.images,
-      category: p.category,
-      salesCount: p.salesCount,
-      avgRating: Math.round(avgRating * 10) / 10,
-      reviewCount: p._count.reviews,
-    };
-  });
+  // 计算每个商品的平均评分（使用共享工具函数）
+  const productsWithRating: ProductCardData[] = products.map((p) => ({
+    id: p.id,
+    name: p.name,
+    slug: p.slug,
+    price: p.price,
+    compareAtPrice: p.compareAtPrice,
+    images: p.images,
+    category: p.category,
+    salesCount: p.salesCount,
+    avgRating: computeAvgRating(p.reviews),
+    reviewCount: p._count.reviews,
+  }));
 
   const totalPages = Math.ceil(total / PAGE_SIZE);
 

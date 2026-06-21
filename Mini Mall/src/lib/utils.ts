@@ -67,3 +67,26 @@ export function truncate(text: string, length: number): string {
   if (text.length <= length) return text;
   return text.slice(0, length) + "...";
 }
+
+/**
+ * 安全解析 JSON 字符串为字符串数组
+ * 用于商品图片、评价晒图等 JSON 字段
+ */
+export function safeParseImages(json: string): string[] {
+  try {
+    const parsed = JSON.parse(json);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
+
+/**
+ * 计算平均评分（0-5，保留一位小数）
+ * 用于商品列表、详情页、首页统一计算
+ */
+export function computeAvgRating(reviews: { rating: number }[]): number {
+  if (reviews.length === 0) return 0;
+  const sum = reviews.reduce((a, b) => a + b.rating, 0);
+  return Math.round((sum / reviews.length) * 10) / 10;
+}

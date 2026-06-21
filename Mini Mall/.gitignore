@@ -42,6 +42,9 @@ prisma/storage/
 # uploads (keep folder, ignore contents)
 /public/uploads/*
 
+# brainstorm visual companion
+.superpowers/
+
 # vercel
 .vercel
 

@@ -1,23 +1,27 @@
 "use client";
 
+import { useMemo } from "react";
 import Link from "next/link";
 import type { ProductCardData } from "@/types";
 import StarRating from "@/components/ui/StarRating";
+import { safeParseImages } from "@/lib/utils";
 
 /**
  * 商品卡片 — 丰富风格
  * 展示：图片 + 名称 + 评分 + 价格（划线价）+ 销量 + 收藏按钮（占位）
  */
 export default function ProductCard({ product }: { product: ProductCardData }) {
-  const images: string[] = JSON.parse(product.images);
-  const mainImage = images[0] || "https://picsum.photos/400/400";
+  const mainImage = useMemo(() => {
+    const images = safeParseImages(product.images);
+    return images[0] || "https://picsum.photos/400/400";
+  }, [product.images]);
 
   return (
     <Link
       href={`/products/${product.slug}`}
       className="group relative rounded-xl border border-gray-200 bg-white transition-shadow hover:shadow-lg"
     >
-      {/* 收藏按钮占位 */}
+      {/* 收藏按钮占位 — Phase 4 实现交互 */}
       <button
         onClick={(e) => {
           e.preventDefault();

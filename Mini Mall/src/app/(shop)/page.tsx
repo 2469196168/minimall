@@ -2,9 +2,10 @@ import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import ProductCard from "@/components/product/ProductCard";
 import type { ProductCardData } from "@/types";
+import { computeAvgRating } from "@/lib/utils";
 
 /**
- * 计算商品平均评分的辅助函数
+ * 将 Prisma 商品查询结果映射为 ProductCardData
  */
 function mapToCardData(
   p: {
@@ -20,11 +21,6 @@ function mapToCardData(
     _count: { reviews: number };
   }
 ): ProductCardData {
-  const ratings = p.reviews.map((r) => r.rating);
-  const avgRating =
-    ratings.length > 0
-      ? ratings.reduce((a, b) => a + b, 0) / ratings.length
-      : 0;
   return {
     id: p.id,
     name: p.name,
@@ -34,7 +30,7 @@ function mapToCardData(
     images: p.images,
     category: p.category,
     salesCount: p.salesCount,
-    avgRating: Math.round(avgRating * 10) / 10,
+    avgRating: computeAvgRating(p.reviews),
     reviewCount: p._count.reviews,
   };
 }

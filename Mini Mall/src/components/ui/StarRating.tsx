@@ -1,6 +1,6 @@
 /**
  * 星级评分展示组件
- * 显示星级（实心/半星/空心）和可选的评分数字
+ * 显示星级（实心/半星/空心）和可选的评价数
  */
 export default function StarRating({
   rating,
@@ -16,11 +16,18 @@ export default function StarRating({
   const emptyStars = 5 - fullStars - (hasHalf ? 1 : 0);
 
   return (
-    <span className="inline-flex items-center gap-1 text-sm text-yellow-500">
+    <span className="inline-flex items-center gap-0.5 text-sm">
       {Array.from({ length: fullStars }, (_, i) => (
-        <span key={`full-${i}`}>★</span>
+        <span key={`full-${i}`} className="text-yellow-500">★</span>
       ))}
-      {hasHalf && <span>★</span>}
+      {hasHalf && (
+        <span className="relative inline-block text-gray-300">
+          <span className="absolute inset-0 overflow-hidden" style={{ width: "50%" }}>
+            <span className="text-yellow-500">★</span>
+          </span>
+          ★
+        </span>
+      )}
       {Array.from({ length: emptyStars }, (_, i) => (
         <span key={`empty-${i}`} className="text-gray-300">★</span>
       ))}

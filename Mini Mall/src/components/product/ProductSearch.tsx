@@ -19,6 +19,13 @@ export default function ProductSearch() {
     setValue(searchParams.get("search") || "");
   }, [searchParams]);
 
+  // 组件卸载时清除定时器，防止内存泄漏
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
+  }, []);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const v = e.target.value;
     setValue(v);
