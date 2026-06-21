@@ -9,7 +9,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"${CLAUDE_PROJECT_DIR}/.claude/skills/superpowers-zh/hooks/session-start\"",
+            "command": "CLAUDE_PLUGIN_ROOT=\"${CLAUDE_PROJECT_DIR}/.claude/skills/superpowers-zh\" bash \"${CLAUDE_PROJECT_DIR}/.claude/skills/superpowers-zh/hooks/session-start\"",
             "async": false
           }
         ]
@@ -22,7 +22,7 @@
       "Bash(npx create-next-app@latest . --typescript --tailwind --eslint --app --src-dir --import-alias \"@/*\" --turbopack --no-git)",
       "Read(//e/Ai Coding/**)",
       "Bash(npx create-next-app@latest \"mini-mall\" --typescript --tailwind --eslint --app --src-dir --import-alias \"@/*\" --turbopack --no-git)",
-      "Bash(bash \"${CLAUDE_PROJECT_DIR}/.claude/skills/superpowers-zh/hooks/session-start\")"
+      "Bash(CLAUDE_PLUGIN_ROOT=\"${CLAUDE_PROJECT_DIR}/.claude/skills/superpowers-zh\" bash \"${CLAUDE_PROJECT_DIR}/.claude/skills/superpowers-zh/hooks/session-start\")"
     ]
   }
 }

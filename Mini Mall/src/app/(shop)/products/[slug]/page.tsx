@@ -3,6 +3,8 @@ import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import StarRating from "@/components/ui/StarRating";
 import ProductImageGallery from "@/components/product/ProductImageGallery";
+import AddToCartButton from "@/components/product/AddToCartButton";
+import WishlistToggle from "@/components/product/WishlistToggle";
 import { safeParseImages, computeAvgRating } from "@/lib/utils";
 
 export default async function ProductDetailPage({
@@ -97,14 +99,14 @@ export default async function ProductDetailPage({
             )}
           </div>
 
-          {/* 操作按钮 — Phase 4 实现加购和购买交互 */}
-          <div className="mt-6 flex gap-3">
-            <div className="flex-1 rounded-lg bg-indigo-600 px-6 py-3 text-center font-medium text-white transition-colors cursor-not-allowed opacity-80">
-              加入购物车
-            </div>
-            <div className="flex-1 rounded-lg bg-red-600 px-6 py-3 text-center font-medium text-white transition-colors cursor-not-allowed opacity-80">
-              立即购买
-            </div>
+          {/* 操作按钮 — 加购 + 收藏 */}
+          <div className="mt-6 space-y-3">
+            <AddToCartButton
+              productId={product.id}
+              productName={product.name}
+              inventory={product.inventory}
+            />
+            <WishlistToggle productId={product.id} />
           </div>
         </div>
       </div>

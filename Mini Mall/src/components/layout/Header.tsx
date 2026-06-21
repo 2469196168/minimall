@@ -1,5 +1,7 @@
 import Link from "next/link";
 import UserMenu from "./UserMenu";
+import CartBadge from "./CartBadge";
+import WishlistBadge from "./WishlistBadge";
 
 export function Header() {
   return (
@@ -33,15 +35,8 @@ export function Header() {
           <Link href="/products" className="text-gray-600 hover:text-indigo-600">
             全部商品
           </Link>
-          <Link href="/wishlist" className="text-gray-600 hover:text-red-500">
-            ♡ 收藏
-          </Link>
-          <Link
-            href="/cart"
-            className="relative text-gray-600 hover:text-indigo-600"
-          >
-            🛒 购物车
-          </Link>
+          <WishlistBadge />
+          <CartBadge />
           <UserMenu />
         </nav>
       </div>

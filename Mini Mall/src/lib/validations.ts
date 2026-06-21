@@ -87,6 +87,22 @@ export const createOrderSchema = z.object({
   note: z.string().max(200, "备注最多200字").optional(),
 });
 
+// ======== Cart ========
+export const addCartItemSchema = z.object({
+  productId: z.string().min(1, "商品ID不能为空"),
+  quantity: z.number().int().min(1, "数量至少为1").max(999, "数量不能超过999"),
+});
+
+export const updateCartItemSchema = z.object({
+  productId: z.string().min(1, "商品ID不能为空"),
+  quantity: z.number().int().min(0, "数量不能为负数").max(999, "数量不能超过999"),
+});
+
+// ======== Wishlist ========
+export const wishlistToggleSchema = z.object({
+  productId: z.string().min(1, "商品ID不能为空"),
+});
+
 // ======== Banner ========
 export const bannerSchema = z.object({
   title: z.string().min(1, "标题不能为空"),
