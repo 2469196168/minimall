@@ -5,6 +5,7 @@ import { prisma } from "@/lib/prisma";
 import { signToken, setTokenCookie } from "@/lib/auth";
 import { loginSchema } from "@/lib/validations";
 import { checkRateLimit } from "@/lib/rate-limit";
+import { getClientIP } from "@/lib/ip";
 
 // 登录频率限制：每 IP 每分钟最多 5 次
 const LOGIN_RATE_LIMIT = 5;
@@ -12,20 +13,14 @@ const LOGIN_RATE_WINDOW = 60 * 1000; // 1 分钟
 
 export async function POST(request: Request) {
   try {
-    // 频率限制
+    // 频率限制 — 安全提取客户端 IP
     const headersList = await headers();
-    const ip =
-      headersList.get("x-forwarded-for")?.split(",")[0]?.trim() ||
-      headersList.get("x-real-ip") ||
-      "127.0.0.1";
+    const ip = getClientIP(headersList);
 
     const rateLimit = checkRateLimit(`login:${ip}`, LOGIN_RATE_LIMIT, LOGIN_RATE_WINDOW);
     if (!rateLimit.allowed) {
       return NextResponse.json(
-        {
-          success: false,
-          error: `登录尝试过于频繁，请 ${Math.ceil((rateLimit.resetAt - Date.now()) / 1000)} 秒后再试`,
-        },
+        { success: false, error: "登录尝试过于频繁，请稍后再试" },
         { status: 429 }
       );
     }
