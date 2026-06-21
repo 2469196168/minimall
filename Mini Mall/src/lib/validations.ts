@@ -31,6 +31,8 @@ export const productSchema = z.object({
   name: z.string().min(1, "商品名称不能为空"),
   price: z.number().positive("价格必须大于0"),
   description: z.string().min(1, "描述不能为空"),
+  compareAtPrice: z.number().min(0).optional().nullable(),
+  images: z.string().optional(),
   categoryId: z.string().optional(),
   inventory: z.number().int().min(0, "库存不能为负数"),
   isActive: z.boolean(),
