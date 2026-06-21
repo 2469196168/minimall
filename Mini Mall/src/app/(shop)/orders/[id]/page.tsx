@@ -268,6 +268,27 @@ export default function OrderDetailPage({
             {actionLoading === "DELIVERED" ? "处理中..." : "📦 确认收货"}
           </button>
         )}
+        {order.status === "DELIVERED" && (
+          <div className="rounded-lg border border-gray-200 bg-gray-50 p-4">
+            <p className="text-sm font-medium text-gray-700 mb-3">📝 评价已购商品</p>
+            <div className="space-y-2">
+              {order.items.map((item) => (
+                <Link
+                  key={item.id}
+                  href={`/products/${item.product.slug}?review=1`}
+                  className="flex items-center justify-between rounded-lg bg-white border border-gray-200 p-2 hover:border-indigo-300 transition-colors"
+                >
+                  <span className="text-sm text-gray-900 truncate flex-1">
+                    {item.product.name}
+                  </span>
+                  <span className="shrink-0 ml-3 text-xs text-indigo-600 font-medium">
+                    去评价 →
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
 
       <div className="mt-6 space-y-2">

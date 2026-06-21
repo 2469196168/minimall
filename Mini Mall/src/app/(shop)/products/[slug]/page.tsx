@@ -5,6 +5,7 @@ import StarRating from "@/components/ui/StarRating";
 import ProductImageGallery from "@/components/product/ProductImageGallery";
 import AddToCartButton from "@/components/product/AddToCartButton";
 import WishlistToggle from "@/components/product/WishlistToggle";
+import ReviewForm from "@/components/review/ReviewForm";
 import { safeParseImages, computeAvgRating } from "@/lib/utils";
 
 export default async function ProductDetailPage({
@@ -164,6 +165,9 @@ export default async function ProductDetailPage({
               ))}
             </div>
           )}
+
+          {/* 评价表单 — Client Component */}
+          <ReviewForm productId={product.id} onSubmitted={async () => {}} />
         </div>
       </div>
     </div>

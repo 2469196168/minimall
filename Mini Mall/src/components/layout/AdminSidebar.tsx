@@ -7,6 +7,7 @@ const menuItems = [
   { href: "/admin", label: "📊 仪表盘", icon: "📊" },
   { href: "/admin/products", label: "📦 商品管理", icon: "📦" },
   { href: "/admin/orders", label: "📋 订单管理", icon: "📋" },
+  { href: "/admin/reviews", label: "⭐ 评价管理", icon: "⭐" },
   { href: "/admin/categories", label: "📂 分类管理", icon: "📂" },
   { href: "/admin/coupons", label: "🎫 优惠券管理", icon: "🎫" },
   { href: "/admin/banners", label: "🖼️ 轮播管理", icon: "🖼️" },
