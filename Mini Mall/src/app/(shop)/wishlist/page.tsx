@@ -3,12 +3,15 @@
 import Link from "next/link";
 import { useWishlist } from "@/hooks/useWishlist";
 import { useCart } from "@/hooks/useCart";
+import { useToast } from "@/hooks/useToast";
 import { formatPrice, safeParseImages, computeAvgRating } from "@/lib/utils";
 import StarRating from "@/components/ui/StarRating";
+import { SkeletonCard } from "@/components/ui/Skeleton";
 
 export default function WishlistPage() {
   const { items, loading, toggle } = useWishlist();
   const { addItem } = useCart();
+  const { addToast } = useToast();
 
   // 加载中骨架
   if (loading) {
@@ -17,11 +20,7 @@ export default function WishlistPage() {
         <h1 className="text-2xl font-bold text-gray-900">我的收藏</h1>
         <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {Array.from({ length: 3 }).map((_, i) => (
-            <div key={i} className="animate-pulse rounded-xl border border-gray-200 p-4">
-              <div className="aspect-square rounded-lg bg-gray-200" />
-              <div className="mt-3 h-4 w-24 rounded bg-gray-200" />
-              <div className="mt-1 h-5 w-16 rounded bg-gray-200" />
-            </div>
+            <SkeletonCard key={i} />
           ))}
         </div>
       </div>

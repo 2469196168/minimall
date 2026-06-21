@@ -27,6 +27,7 @@ export function slugify(text: string): string {
 
 /**
  * Generate order number: yyyyMMddHHmmss-随机4位
+ * 使用 crypto.getRandomValues 替代 Math.random，防止订单号可预测
  */
 export function generateOrderNo(): string {
   const now = new Date();
@@ -34,8 +35,11 @@ export function generateOrderNo(): string {
     .toISOString()
     .replace(/[-:T.]/g, "")
     .slice(0, 14);
-  const random = Math.floor(1000 + Math.random() * 9000);
-  return `${datePart}-${random}`;
+  // crypto.getRandomValues 在 Node.js (≥19 via globalThis) 和浏览器均可用
+  const arr = new Uint32Array(1);
+  crypto.getRandomValues(arr);
+  const rnd = 1000 + (arr[0] % 9000);
+  return `${datePart}-${rnd}`;
 }
 
 /**
@@ -71,11 +75,21 @@ export function truncate(text: string, length: number): string {
 /**
  * 安全解析 JSON 字符串为字符串数组
  * 用于商品图片、评价晒图等 JSON 字段
+ * 同时过滤危险 URL scheme（javascript:, data:, vbscript:）
  */
 export function safeParseImages(json: string): string[] {
   try {
     const parsed = JSON.parse(json);
-    return Array.isArray(parsed) ? parsed : [];
+    if (!Array.isArray(parsed)) return [];
+    return parsed.filter(
+      (url): url is string =>
+        typeof url === "string" &&
+        url.length > 0 &&
+        // 只允许 http/https 或相对路径，阻止 javascript:/data:/vbscript: 等危险 scheme
+        (url.startsWith("https://") ||
+          url.startsWith("http://") ||
+          url.startsWith("/"))
+    );
   } catch {
     return [];
   }

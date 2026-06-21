@@ -3,10 +3,13 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCart } from "@/hooks/useCart";
+import { useToast } from "@/hooks/useToast";
 import { formatPrice, safeParseImages } from "@/lib/utils";
+import { SkeletonListItem } from "@/components/ui/Skeleton";
 
 export default function CartPage() {
   const { items, loading, totalCount, totalAmount, updateQuantity, removeItem } = useCart();
+  const { addToast } = useToast();
   const router = useRouter();
 
   // 加载中骨架
@@ -16,14 +19,7 @@ export default function CartPage() {
         <h1 className="text-2xl font-bold text-gray-900">购物车</h1>
         <div className="mt-8 space-y-4">
           {Array.from({ length: 3 }).map((_, i) => (
-            <div key={i} className="flex animate-pulse gap-4 rounded-xl border border-gray-200 p-4">
-              <div className="h-20 w-20 rounded-lg bg-gray-200" />
-              <div className="flex-1 space-y-2">
-                <div className="h-4 w-32 rounded bg-gray-200" />
-                <div className="h-3 w-16 rounded bg-gray-200" />
-                <div className="h-6 w-24 rounded bg-gray-200" />
-              </div>
-            </div>
+            <SkeletonListItem key={i} lines={3} />
           ))}
         </div>
       </div>
@@ -93,7 +89,10 @@ export default function CartPage() {
                   {/* 数量调节 */}
                   <div className="flex items-center gap-0 rounded-lg border border-gray-300">
                     <button
-                      onClick={() => updateQuantity(item.productId, item.quantity - 1)}
+                      onClick={async () => {
+                        const result = await updateQuantity(item.productId, item.quantity - 1);
+                        if (!result.success && result.error) addToast("error", result.error);
+                      }}
                       disabled={item.quantity <= 1}
                       className="px-3 py-1 text-gray-600 transition-colors hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-40"
                     >
@@ -103,7 +102,10 @@ export default function CartPage() {
                       {item.quantity}
                     </span>
                     <button
-                      onClick={() => updateQuantity(item.productId, item.quantity + 1)}
+                      onClick={async () => {
+                        const result = await updateQuantity(item.productId, item.quantity + 1);
+                        if (!result.success && result.error) addToast("error", result.error);
+                      }}
                       disabled={isMaxStock}
                       className="px-3 py-1 text-gray-600 transition-colors hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-40"
                       title={isMaxStock ? `库存仅 ${item.product.inventory} 件` : undefined}
@@ -117,7 +119,14 @@ export default function CartPage() {
                       {formatPrice(subtotal)}
                     </span>
                     <button
-                      onClick={() => removeItem(item.productId)}
+                      onClick={async () => {
+                        const result = await removeItem(item.productId);
+                        if (result.success) {
+                          addToast("success", "已从购物车移除");
+                        } else if (result.error) {
+                          addToast("error", result.error);
+                        }
+                      }}
                       className="text-xs text-red-500 hover:text-red-700"
                     >
                       删除

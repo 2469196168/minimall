@@ -119,12 +119,17 @@ export async function PATCH(
       );
     }
 
-    const body = await request.json().catch(() => null);
-    const isActive = body?.isActive;
+    const body = await request.json().catch(() => ({}));
+    if (typeof body.isActive !== "boolean") {
+      return NextResponse.json(
+        { success: false, error: "isActive 必须是布尔值" },
+        { status: 400 }
+      );
+    }
 
     const coupon = await prisma.coupon.update({
       where: { id },
-      data: { isActive },
+      data: { isActive: body.isActive },
     });
 
     return NextResponse.json({ success: true, data: coupon });

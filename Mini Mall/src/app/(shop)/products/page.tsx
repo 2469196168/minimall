@@ -3,6 +3,7 @@ import { prisma } from "@/lib/prisma";
 import ProductGrid from "@/components/product/ProductGrid";
 import ProductSearch from "@/components/product/ProductSearch";
 import CategoryFilter from "@/components/product/CategoryFilter";
+import MobileCategoryFilter from "@/components/product/MobileCategoryFilter";
 import Pagination from "@/components/ui/Pagination";
 import SortSelect from "@/components/product/SortSelect";
 import type { ProductCardData } from "@/types";
@@ -89,8 +90,8 @@ export default async function ProductsPage({
   return (
     <div className="mx-auto max-w-7xl px-4 py-6">
       <div className="flex gap-8">
-        {/* 侧边栏 */}
-        <aside className="w-56 shrink-0">
+        {/* 侧边栏 — 桌面端 */}
+        <aside className="hidden w-56 shrink-0 lg:block">
           <CategoryFilter
             categories={categories.map((c) => ({
               slug: c.slug,
@@ -105,13 +106,26 @@ export default async function ProductsPage({
         {/* 主内容区 */}
         <main className="flex-1 min-w-0">
           {/* 搜索 + 排序栏 */}
-          <div className="mb-6 flex items-center gap-4">
+          <div className="mb-4 flex items-center gap-3">
             <div className="flex-1">
               <Suspense fallback={<div className="h-10 animate-pulse rounded-lg bg-gray-100" />}>
                 <ProductSearch />
               </Suspense>
             </div>
             <SortSelect currentSort={sort} />
+          </div>
+
+          {/* 移动端分类筛选 */}
+          <div className="mb-4">
+            <MobileCategoryFilter
+              categories={categories.map((c) => ({
+                slug: c.slug,
+                name: c.name,
+                icon: c.icon,
+                _count: c._count.products,
+              }))}
+              currentCategory={category}
+            />
           </div>
 
           {/* 商品网格 */}

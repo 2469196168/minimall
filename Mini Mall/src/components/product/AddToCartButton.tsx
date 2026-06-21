@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useCart } from "@/hooks/useCart";
 import { useAuth } from "@/hooks/useAuth";
+import { useToast } from "@/hooks/useToast";
 
 interface AddToCartButtonProps {
   productId: string;
@@ -13,14 +14,15 @@ interface AddToCartButtonProps {
 
 /**
  * 商品详情页加购按钮
- * 点击添加到购物车，含成功反馈
+ * 点击添加到购物车，含 Toast 反馈
  */
-export default function AddToCartButton({ productId, inventory }: AddToCartButtonProps) {
+export default function AddToCartButton({ productId, productName, inventory }: AddToCartButtonProps) {
   const [quantity, setQuantity] = useState(1);
   const [adding, setAdding] = useState(false);
   const [added, setAdded] = useState(false);
   const { addItem } = useCart();
   const { user } = useAuth();
+  const { addToast } = useToast();
   const router = useRouter();
 
   const isOutOfStock = inventory <= 0;
@@ -35,7 +37,10 @@ export default function AddToCartButton({ productId, inventory }: AddToCartButto
     setAdding(false);
     if (result.success) {
       setAdded(true);
+      addToast("success", `"${productName}" 已加入购物车`);
       setTimeout(() => setAdded(false), 2000);
+    } else if (result.error) {
+      addToast("error", result.error);
     }
   };
 
@@ -90,10 +95,24 @@ export default function AddToCartButton({ productId, inventory }: AddToCartButto
                 : "加入购物车"}
         </button>
         <button
-          disabled={isOutOfStock}
+          onClick={async () => {
+            if (!user) {
+              router.push("/login?redirect=" + encodeURIComponent(window.location.pathname));
+              return;
+            }
+            setAdding(true);
+            const result = await addItem(productId, quantity);
+            if (result.success) {
+              router.push("/checkout");
+            } else {
+              setAdding(false);
+              addToast("error", result.error || "操作失败");
+            }
+          }}
+          disabled={isOutOfStock || adding}
           className="flex-1 rounded-lg bg-red-600 px-6 py-3 text-center font-medium text-white transition-colors hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-50"
         >
-          立即购买
+          {adding ? "处理中..." : "立即购买"}
         </button>
       </div>
     </div>

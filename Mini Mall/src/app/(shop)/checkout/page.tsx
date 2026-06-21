@@ -4,6 +4,7 @@ import { useState, useEffect, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useCart } from "@/hooks/useCart";
+import { useToast } from "@/hooks/useToast";
 import { formatPrice, safeParseImages } from "@/lib/utils";
 
 // ======== Types ========
@@ -30,6 +31,7 @@ interface CouponResult {
 export default function CheckoutPage() {
   const router = useRouter();
   const { items, loading: cartLoading, totalAmount } = useCart();
+  const { addToast } = useToast();
 
   // 地址
   const [addresses, setAddresses] = useState<Address[]>([]);
@@ -83,12 +85,15 @@ export default function CheckoutPage() {
       const data = await res.json();
       if (data.success) {
         setCouponResult(data.data);
+        addToast("success", `优惠券"${data.data.name}"已使用，节省 ¥${data.data.discount.toFixed(2)}`);
       } else {
         setCouponError(data.error || "优惠券无效");
         setCouponResult(null);
+        addToast("error", data.error || "优惠券无效");
       }
     } catch {
       setCouponError("网络错误");
+      addToast("error", "网络错误，请稍后再试");
     } finally {
       setValidatingCoupon(false);
     }
@@ -125,12 +130,15 @@ export default function CheckoutPage() {
       });
       const data = await res.json();
       if (data.success) {
+        addToast("success", "下单成功！");
         router.push(`/orders/${data.data.id}`);
       } else {
         setError(data.error || "下单失败");
+        addToast("error", data.error || "下单失败");
       }
     } catch {
       setError("网络错误，请稍后再试");
+      addToast("error", "网络错误，请稍后再试");
     } finally {
       setSubmitting(false);
     }

@@ -2,17 +2,18 @@ import Link from "next/link";
 import UserMenu from "./UserMenu";
 import CartBadge from "./CartBadge";
 import WishlistBadge from "./WishlistBadge";
+import MobileNav from "./MobileNav";
 
 export function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-gray-200 bg-white">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4">
         {/* Logo */}
-        <Link href="/" className="text-xl font-bold text-indigo-600">
+        <Link href="/" className="shrink-0 text-xl font-bold text-indigo-600">
           🛍️ Mini Mall
         </Link>
 
-        {/* Search */}
+        {/* Search — desktop only */}
         <div className="hidden flex-1 px-8 md:block">
           <form action="/products" method="GET" className="relative">
             <input
@@ -30,8 +31,8 @@ export function Header() {
           </form>
         </div>
 
-        {/* Right nav */}
-        <nav className="flex items-center gap-4 text-sm">
+        {/* Right nav — desktop */}
+        <nav className="hidden items-center gap-4 text-sm md:flex">
           <Link href="/products" className="text-gray-600 hover:text-indigo-600">
             全部商品
           </Link>
@@ -39,6 +40,9 @@ export function Header() {
           <CartBadge />
           <UserMenu />
         </nav>
+
+        {/* Mobile hamburger — replaces right nav on small screens */}
+        <MobileNav />
       </div>
     </header>
   );
