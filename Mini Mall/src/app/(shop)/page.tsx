@@ -1,33 +1,82 @@
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
+import ProductCard from "@/components/product/ProductCard";
+import type { ProductCardData } from "@/types";
+
+/**
+ * 计算商品平均评分的辅助函数
+ */
+function mapToCardData(
+  p: {
+    id: string;
+    name: string;
+    slug: string;
+    price: number;
+    compareAtPrice: number | null;
+    images: string;
+    salesCount: number;
+    category: { name: string; slug: string } | null;
+    reviews: { rating: number }[];
+    _count: { reviews: number };
+  }
+): ProductCardData {
+  const ratings = p.reviews.map((r) => r.rating);
+  const avgRating =
+    ratings.length > 0
+      ? ratings.reduce((a, b) => a + b, 0) / ratings.length
+      : 0;
+  return {
+    id: p.id,
+    name: p.name,
+    slug: p.slug,
+    price: p.price,
+    compareAtPrice: p.compareAtPrice,
+    images: p.images,
+    category: p.category,
+    salesCount: p.salesCount,
+    avgRating: Math.round(avgRating * 10) / 10,
+    reviewCount: p._count.reviews,
+  };
+}
 
 export default async function HomePage() {
-  // Fetch featured products
+  // 精选推荐商品
   const featuredProducts = await prisma.product.findMany({
     where: { isActive: true, isFeatured: true },
     take: 8,
     orderBy: { salesCount: "desc" },
-    include: { category: { select: { name: true, slug: true } } },
+    include: {
+      category: { select: { name: true, slug: true } },
+      _count: { select: { reviews: true } },
+      reviews: { select: { rating: true } },
+    },
   });
 
-  // Fetch hot products (by sales)
+  // 热销商品
   const hotProducts = await prisma.product.findMany({
     where: { isActive: true },
     take: 4,
     orderBy: { salesCount: "desc" },
-    include: { category: { select: { name: true, slug: true } } },
+    include: {
+      category: { select: { name: true, slug: true } },
+      _count: { select: { reviews: true } },
+      reviews: { select: { rating: true } },
+    },
   });
 
-  // Fetch banners
+  // 轮播
   const banners = await prisma.banner.findMany({
     where: { isActive: true, position: "HOME" },
     orderBy: { sortOrder: "asc" },
   });
 
-  // Fetch categories
+  // 分类
   const categories = await prisma.category.findMany({
     orderBy: { sortOrder: "asc" },
   });
+
+  const featuredWithRating = featuredProducts.map(mapToCardData);
+  const hotWithRating = hotProducts.map(mapToCardData);
 
   return (
     <div className="space-y-10">
@@ -83,7 +132,7 @@ export default async function HomePage() {
       <section>
         <h2 className="mb-4 text-xl font-bold">✨ 精选推荐</h2>
         <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
-          {featuredProducts.map((product) => (
+          {featuredWithRating.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
         </div>
@@ -93,63 +142,11 @@ export default async function HomePage() {
       <section>
         <h2 className="mb-4 text-xl font-bold">🔥 热销排行</h2>
         <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
-          {hotProducts.map((product) => (
+          {hotWithRating.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
         </div>
       </section>
     </div>
-  );
-}
-
-// Simple inline product card for homepage
-function ProductCard({
-  product,
-}: {
-  product: {
-    id: string;
-    name: string;
-    slug: string;
-    price: number;
-    compareAtPrice: number | null;
-    images: string;
-    salesCount: number;
-    category: { name: string; slug: string } | null;
-  };
-}) {
-  const images: string[] = JSON.parse(product.images);
-  const mainImage = images[0] || "https://picsum.photos/400/400";
-
-  return (
-    <Link
-      href={`/products/${product.slug}`}
-      className="group rounded-xl border border-gray-200 bg-white transition-shadow hover:shadow-lg"
-    >
-      <div className="aspect-square overflow-hidden rounded-t-xl bg-gray-100">
-        <img
-          src={mainImage}
-          alt={product.name}
-          className="h-full w-full object-cover transition-transform group-hover:scale-105"
-        />
-      </div>
-      <div className="p-3">
-        <h3 className="truncate text-sm font-medium text-gray-900">
-          {product.name}
-        </h3>
-        <div className="mt-1 flex items-baseline gap-2">
-          <span className="text-lg font-bold text-red-600">
-            ¥{product.price.toFixed(2)}
-          </span>
-          {product.compareAtPrice && (
-            <span className="text-xs text-gray-400 line-through">
-              ¥{product.compareAtPrice.toFixed(2)}
-            </span>
-          )}
-        </div>
-        <p className="mt-1 text-xs text-gray-500">
-          已售 {product.salesCount}
-        </p>
-      </div>
-    </Link>
   );
 }

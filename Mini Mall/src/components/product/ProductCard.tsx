@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import type { ProductCardData } from "@/types";
 import StarRating from "@/components/ui/StarRating";
