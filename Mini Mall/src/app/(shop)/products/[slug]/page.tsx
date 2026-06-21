@@ -167,7 +167,7 @@ export default async function ProductDetailPage({
           )}
 
           {/* 评价表单 — Client Component */}
-          <ReviewForm productId={product.id} onSubmitted={async () => {}} />
+          <ReviewForm productId={product.id} />
         </div>
       </div>
     </div>

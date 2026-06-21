@@ -6,7 +6,7 @@ import { useAuth } from "@/hooks/useAuth";
 
 interface ReviewFormProps {
   productId: string;
-  onSubmitted: () => void;
+  onSubmitted?: () => void;
 }
 
 /**
@@ -71,7 +71,7 @@ export default function ReviewForm({ productId, onSubmitted }: ReviewFormProps) 
       if (data.success) {
         setSuccess(true);
         setContent("");
-        onSubmitted();
+        onSubmitted?.();
         // 延迟刷新页面，让 Server Component 重新获取评价数据
         setTimeout(() => router.refresh(), 1500);
       } else {
