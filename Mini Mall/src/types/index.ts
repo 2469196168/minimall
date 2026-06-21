@@ -34,6 +34,8 @@ export interface ProductCardData {
   images: string;
   category: { name: string; slug: string } | null;
   salesCount: number;
+  avgRating: number;       // 新增：平均评分，0-5
+  reviewCount: number;     // 新增：评价数量
 }
 
 // ======== Cart ========
