@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mini Mall - 微型电商</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .banner-slider { scroll-snap-type: x mandatory; }
+    .banner-slider > * { scroll-snap-align: start; flex-shrink: 0; }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+  <!-- Header -->
+  <header class="sticky top-0 z-50 bg-white border-b border-gray-200">
+    <div class="max-w-7xl mx-auto flex items-center justify-between h-16 px-4">
+      <a href="index.html" class="text-xl font-bold text-indigo-600">🛍️ Mini Mall</a>
+      <div class="hidden md:flex flex-1 px-8">
+        <form action="products.html" class="relative w-full max-w-md">
+          <input type="text" name="search" placeholder="搜索商品..." class="w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-2 pr-10 text-sm focus:border-indigo-500 focus:outline-none">
+          <button type="submit" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">🔍</button>
+        </form>
+      </div>
+      <nav class="hidden md:flex items-center gap-4 text-sm">
+        <a href="products.html" class="text-gray-600 hover:text-indigo-600">全部商品</a>
+        <a href="wishlist.html" class="text-gray-600 hover:text-indigo-600">❤️ 收藏</a>
+        <a href="cart.html" class="text-gray-600 hover:text-indigo-600">🛒 购物车<span class="ml-1 rounded-full bg-red-500 px-1.5 py-0.5 text-xs text-white">3</span></a>
+        <a href="login.html" class="text-indigo-600 font-medium">登录</a>
+      </nav>
+      <button class="md:hidden p-2 text-gray-600" onclick="document.getElementById('mobileNav').classList.toggle('hidden')">☰</button>
+    </div>
+  </header>
+
+  <!-- Hero Banner -->
+  <section class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white">
+    <div class="max-w-7xl mx-auto px-4 py-16 md:py-24 text-center">
+      <h1 class="text-4xl md:text-5xl font-bold">发现好物，品质生活</h1>
+      <p class="mt-4 text-lg text-indigo-100">全场满99包邮 · 新人首单9折</p>
+      <a href="products.html" class="inline-block mt-8 rounded-lg bg-white px-8 py-3 text-lg font-medium text-indigo-600 hover:bg-gray-100 transition">立即选购</a>
+    </div>
+  </section>
+
+  <!-- Categories -->
+  <section class="max-w-7xl mx-auto px-4 py-12">
+    <h2 class="text-2xl font-bold text-gray-900">商品分类</h2>
+    <div class="mt-6 grid grid-cols-2 md:grid-cols-5 gap-4">
+      <a href="products.html?category=electronica" class="flex flex-col items-center rounded-xl border border-gray-200 bg-white p-6 hover:shadow-md transition">
+        <span class="text-3xl">📱</span><span class="mt-2 text-sm font-medium text-gray-700">电子产品</span>
+      </a>
+      <a href="products.html?category=ropa" class="flex flex-col items-center rounded-xl border border-gray-200 bg-white p-6 hover:shadow-md transition">
+        <span class="text-3xl">👕</span><span class="mt-2 text-sm font-medium text-gray-700">服装配饰</span>
+      </a>
+      <a href="products.html?category=hogar" class="flex flex-col items-center rounded-xl border border-gray-200 bg-white p-6 hover:shadow-md transition">
+        <span class="text-3xl">🏠</span><span class="mt-2 text-sm font-medium text-gray-700">家居生活</span>
+      </a>
+      <a href="products.html?category=alimentos" class="flex flex-col items-center rounded-xl border border-gray-200 bg-white p-6 hover:shadow-md transition">
+        <span class="text-3xl">🍜</span><span class="mt-2 text-sm font-medium text-gray-700">食品饮料</span>
+      </a>
+      <a href="products.html?category=deportes" class="flex flex-col items-center rounded-xl border border-gray-200 bg-white p-6 hover:shadow-md transition">
+        <span class="text-3xl">⚽</span><span class="mt-2 text-sm font-medium text-gray-700">运动户外</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- Featured Products -->
+  <section class="max-w-7xl mx-auto px-4 py-12">
+    <div class="flex items-center justify-between">
+      <h2 class="text-2xl font-bold text-gray-900">精选好物</h2>
+      <a href="products.html" class="text-sm text-indigo-600 hover:underline">查看全部 →</a>
+    </div>
+    <div class="mt-6 grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div class="rounded-xl border border-gray-200 bg-white p-3 hover:shadow-md transition cursor-pointer" onclick="location.href='product-detail.html'">
+        <div class="aspect-square rounded-lg bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center text-5xl">🎧</div>
+        <h3 class="mt-3 text-sm font-medium text-gray-900 truncate">无线蓝牙耳机 Pro</h3>
+        <div class="mt-1 flex items-baseline gap-2">
+          <span class="text-lg font-bold text-red-600">¥299.00</span>
+          <span class="text-xs text-gray-400 line-through">¥399.00</span>
+        </div>
+        <div class="mt-1 flex items-center gap-1 text-xs text-yellow-500">★★★★★ <span class="text-gray-400">(128)</span></div>
+      </div>
+      <div class="rounded-xl border border-gray-200 bg-white p-3 hover:shadow-md transition cursor-pointer" onclick="location.href='product-detail.html'">
+        <div class="aspect-square rounded-lg bg-gradient-to-br from-green-100 to-green-200 flex items-center justify-center text-5xl">⌚</div>
+        <h3 class="mt-3 text-sm font-medium text-gray-900 truncate">智能手表 S8</h3>
+        <div class="mt-1 flex items-baseline gap-2">
+          <span class="text-lg font-bold text-red-600">¥599.00</span>
+          <span class="text-xs text-gray-400 line-through">¥799.00</span>
+        </div>
+        <div class="mt-1 flex items-center gap-1 text-xs text-yellow-500">★★★★☆ <span class="text-gray-400">(86)</span></div>
+      </div>
+      <div class="rounded-xl border border-gray-200 bg-white p-3 hover:shadow-md transition cursor-pointer" onclick="location.href='product-detail.html'">
+        <div class="aspect-square rounded-lg bg-gradient-to-br from-purple-100 to-purple-200 flex items-center justify-center text-5xl">🎮</div>
+        <h3 class="mt-3 text-sm font-medium text-gray-900 truncate">机械键盘 RGB</h3>
+        <div class="mt-1 flex items-baseline gap-2">
+          <span class="text-lg font-bold text-red-600">¥459.00</span>
+        </div>
+        <div class="mt-1 flex items-center gap-1 text-xs text-yellow-500">★★★★★ <span class="text-gray-400">(203)</span></div>
+      </div>
+      <div class="rounded-xl border border-gray-200 bg-white p-3 hover:shadow-md transition cursor-pointer" onclick="location.href='product-detail.html'">
+        <div class="aspect-square rounded-lg bg-gradient-to-br from-orange-100 to-orange-200 flex items-center justify-center text-5xl">🎒</div>
+        <h3 class="mt-3 text-sm font-medium text-gray-900 truncate">运动背包 30L</h3>
+        <div class="mt-1 flex items-baseline gap-2">
+          <span class="text-lg font-bold text-red-600">¥189.00</span>
+          <span class="text-xs text-gray-400 line-through">¥259.00</span>
+        </div>
+        <div class="mt-1 flex items-center gap-1 text-xs text-yellow-500">★★★★☆ <span class="text-gray-400">(42)</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Hot Products -->
+  <section class="max-w-7xl mx-auto px-4 py-12">
+    <h2 class="text-2xl font-bold text-gray-900">热销排行</h2>
+    <div class="mt-6 grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div class="rounded-xl border border-gray-200 bg-white p-3 hover:shadow-md transition cursor-pointer relative" onclick="location.href='product-detail.html'">
+        <span class="absolute top-2 left-2 rounded bg-red-500 px-1.5 py-0.5 text-xs text-white font-bold">🔥 热卖</span>
+        <div class="aspect-square rounded-lg bg-gradient-to-br from-pink-100 to-pink-200 flex items-center justify-center text-5xl">📱</div>
+        <h3 class="mt-3 text-sm font-medium text-gray-900 truncate">智能手机 S24</h3>
+        <div class="mt-1"><span class="text-lg font-bold text-red-600">¥3,999.00</span></div>
+        <div class="mt-1 text-xs text-gray-400">已售 1,234 件</div>
+      </div>
+      <div class="rounded-xl border border-gray-200 bg-white p-3 hover:shadow-md transition cursor-pointer relative" onclick="location.href='product-detail.html'">
+        <span class="absolute top-2 left-2 rounded bg-red-500 px-1.5 py-0.5 text-xs text-white font-bold">🔥 热卖</span>
+        <div class="aspect-square rounded-lg bg-gradient-to-br from-teal-100 to-teal-200 flex items-center justify-center text-5xl">💻</div>
+        <h3 class="mt-3 text-sm font-medium text-gray-900 truncate">轻薄笔记本 Air</h3>
+        <div class="mt-1"><span class="text-lg font-bold text-red-600">¥5,999.00</span></div>
+        <div class="mt-1 text-xs text-gray-400">已售 856 件</div>
+      </div>
+      <div class="rounded-xl border border-gray-200 bg-white p-3 hover:shadow-md transition cursor-pointer" onclick="location.href='product-detail.html'">
+        <div class="aspect-square rounded-lg bg-gradient-to-br from-yellow-100 to-yellow-200 flex items-center justify-center text-5xl">🔌</div>
+        <h3 class="mt-3 text-sm font-medium text-gray-900 truncate">快充充电器 65W</h3>
+        <div class="mt-1"><span class="text-lg font-bold text-red-600">¥89.00</span></div>
+        <div class="mt-1 text-xs text-gray-400">已售 520 件</div>
+      </div>
+      <div class="rounded-xl border border-gray-200 bg-white p-3 hover:shadow-md transition cursor-pointer" onclick="location.href='product-detail.html'">
+        <div class="aspect-square rounded-lg bg-gradient-to-br from-indigo-100 to-indigo-200 flex items-center justify-center text-5xl">🖱️</div>
+        <h3 class="mt-3 text-sm font-medium text-gray-900 truncate">无线鼠标 静音版</h3>
+        <div class="mt-1"><span class="text-lg font-bold text-red-600">¥129.00</span></div>
+        <div class="mt-1 text-xs text-gray-400">已售 340 件</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-gray-200 bg-white mt-12">
+    <div class="max-w-7xl mx-auto px-4 py-8 grid grid-cols-2 md:grid-cols-4 gap-8 text-sm text-gray-600">
+      <div><h4 class="font-bold text-gray-900 mb-3">购物指南</h4><p class="mt-1">购物流程</p><p class="mt-1">会员介绍</p><p class="mt-1">常见问题</p></div>
+      <div><h4 class="font-bold text-gray-900 mb-3">配送方式</h4><p class="mt-1">上门自提</p><p class="mt-1">快递运输</p><p class="mt-1">物流查询</p></div>
+      <div><h4 class="font-bold text-gray-900 mb-3">售后服务</h4><p class="mt-1">退换货政策</p><p class="mt-1">退款说明</p><p class="mt-1">联系客服</p></div>
+      <div><h4 class="font-bold text-gray-900 mb-3">关于我们</h4><p class="mt-1">公司介绍</p><p class="mt-1">联系我们</p><p class="mt-1">加入我们</p></div>
+    </div>
+    <div class="border-t border-gray-100 py-6 text-center text-xs text-gray-400">
+      © 2026 Mini Mall. 仅供学习用途。
+    </div>
+  </footer>
+
+  <!-- Mobile Nav -->
+  <div id="mobileNav" class="hidden fixed inset-0 z-50 bg-black/50 md:hidden" onclick="this.classList.add('hidden')">
+    <div class="absolute right-0 top-0 h-full w-72 bg-white shadow-xl p-4" onclick="event.stopPropagation()">
+      <div class="flex items-center justify-between mb-4">
+        <span class="text-lg font-bold text-indigo-600">🛍️ Mini Mall</span>
+        <button onclick="document.getElementById('mobileNav').classList.add('hidden')" class="text-gray-400 text-xl">✕</button>
+      </div>
+      <form action="products.html" class="mb-4"><input type="text" name="search" placeholder="搜索..." class="w-full rounded-lg border px-3 py-2 text-sm"></form>
+      <nav class="flex flex-col gap-2">
+        <a href="products.html" class="px-3 py-2 rounded-lg hover:bg-gray-100">🛒 全部商品</a>
+        <a href="cart.html" class="px-3 py-2 rounded-lg hover:bg-gray-100">🛍️ 购物车 (3)</a>
+        <a href="wishlist.html" class="px-3 py-2 rounded-lg hover:bg-gray-100">❤️ 收藏 (2)</a>
+        <a href="orders.html" class="px-3 py-2 rounded-lg hover:bg-gray-100">📦 我的订单</a>
+        <hr class="my-2">
+        <a href="login.html" class="block mx-3 mt-2 text-center rounded-lg bg-indigo-600 px-4 py-2 text-sm text-white font-medium">登录 / 注册</a>
+      </nav>
+    </div>
+  </div>
+</body>
+</html>

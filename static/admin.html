@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>管理后台 - Mini Mall</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+  <div class="flex">
+    <!-- Sidebar -->
+    <aside class="hidden lg:block fixed left-0 top-0 h-screen w-60 bg-gray-900 text-white">
+      <div class="flex h-16 items-center border-b border-gray-700 px-6">
+        <a href="index.html" class="text-lg font-bold">🛍️ Mini Mall Admin</a>
+      </div>
+      <nav class="mt-4 space-y-1 px-3">
+        <a href="admin.html" class="flex items-center gap-3 rounded-lg bg-indigo-600 px-4 py-2.5 text-sm">📊 数据面板</a>
+        <a href="#" class="flex items-center gap-3 rounded-lg px-4 py-2.5 text-sm text-gray-300 hover:bg-gray-800">📦 商品管理</a>
+        <a href="#" class="flex items-center gap-3 rounded-lg px-4 py-2.5 text-sm text-gray-300 hover:bg-gray-800">📂 分类管理</a>
+        <a href="#" class="flex items-center gap-3 rounded-lg px-4 py-2.5 text-sm text-gray-300 hover:bg-gray-800">📋 订单管理</a>
+        <a href="#" class="flex items-center gap-3 rounded-lg px-4 py-2.5 text-sm text-gray-300 hover:bg-gray-800">👥 用户管理</a>
+        <a href="#" class="flex items-center gap-3 rounded-lg px-4 py-2.5 text-sm text-gray-300 hover:bg-gray-800">🎫 优惠券管理</a>
+        <a href="#" class="flex items-center gap-3 rounded-lg px-4 py-2.5 text-sm text-gray-300 hover:bg-gray-800">🖼️ 轮播管理</a>
+        <a href="#" class="flex items-center gap-3 rounded-lg px-4 py-2.5 text-sm text-gray-300 hover:bg-gray-800">⭐ 评价管理</a>
+      </nav>
+      <div class="absolute bottom-4 left-0 w-full px-3">
+        <a href="index.html" class="flex items-center gap-3 rounded-lg px-4 py-2.5 text-sm text-gray-400 hover:bg-gray-800 hover:text-white">← 返回商城</a>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <main class="flex-1 lg:ml-60 p-4 lg:p-8">
+      <!-- Header -->
+      <header class="flex items-center justify-between bg-white rounded-xl border border-gray-200 px-4 lg:px-8 py-4 mb-6">
+        <div class="flex items-center gap-3">
+          <button class="lg:hidden p-2 text-gray-600 rounded-lg hover:bg-gray-100">☰</button>
+          <h1 class="text-lg font-semibold text-gray-800">管理后台</h1>
+        </div>
+        <div class="flex items-center gap-4 text-sm">
+          <span class="hidden sm:inline text-gray-600">管理员</span>
+          <a href="login.html" class="rounded-lg border border-gray-300 px-3 py-1.5 text-gray-600 hover:bg-gray-50 text-sm">退出</a>
+        </div>
+      </header>
+
+      <!-- Stats Cards -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+        <div class="rounded-xl border border-gray-200 bg-white p-6"><p class="text-sm text-gray-500">本月收入</p><p class="mt-2 text-2xl font-bold text-gray-900">¥12,580</p><p class="mt-1 text-xs text-green-600">↑ 12.5%</p></div>
+        <div class="rounded-xl border border-gray-200 bg-white p-6"><p class="text-sm text-gray-500">订单数</p><p class="mt-2 text-2xl font-bold text-gray-900">156</p><p class="mt-1 text-xs text-green-600">↑ 8.2%</p></div>
+        <div class="rounded-xl border border-gray-200 bg-white p-6"><p class="text-sm text-gray-500">用户数</p><p class="mt-2 text-2xl font-bold text-gray-900">1,024</p><p class="mt-1 text-xs text-green-600">↑ 15.3%</p></div>
+        <div class="rounded-xl border border-gray-200 bg-white p-6"><p class="text-sm text-gray-500">商品数</p><p class="mt-2 text-2xl font-bold text-gray-900">48</p><p class="mt-1 text-xs text-gray-400">在售 42 件</p></div>
+      </div>
+
+      <!-- Recent Orders Table -->
+      <div class="rounded-xl border border-gray-200 bg-white">
+        <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200">
+          <h3 class="font-bold text-gray-900">最近订单</h3>
+          <a href="#" class="text-sm text-indigo-600">查看全部 →</a>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead><tr class="border-b bg-gray-50"><th class="px-4 py-3 text-left font-medium text-gray-600">订单号</th><th class="px-4 py-3 text-left font-medium text-gray-600">用户</th><th class="px-4 py-3 text-left font-medium text-gray-600">金额</th><th class="px-4 py-3 text-left font-medium text-gray-600">状态</th><th class="px-4 py-3 text-left font-medium text-gray-600">时间</th></tr></thead>
+            <tbody>
+              <tr class="border-t hover:bg-gray-50"><td class="px-4 py-3 font-mono text-xs">202606221430-7842</td><td class="px-4 py-3">张三</td><td class="px-4 py-3">¥898.00</td><td class="px-4 py-3"><span class="rounded-full bg-amber-100 px-2 py-0.5 text-xs text-amber-700">待付款</span></td><td class="px-4 py-3 text-xs text-gray-400">06-22 14:30</td></tr>
+              <tr class="border-t hover:bg-gray-50"><td class="px-4 py-3 font-mono text-xs">202606220915-5631</td><td class="px-4 py-3">李四</td><td class="px-4 py-3">¥89.00</td><td class="px-4 py-3"><span class="rounded-full bg-green-100 px-2 py-0.5 text-xs text-green-700">已完成</span></td><td class="px-4 py-3 text-xs text-gray-400">06-22 09:15</td></tr>
+              <tr class="border-t hover:bg-gray-50"><td class="px-4 py-3 font-mono text-xs">202606210830-9210</td><td class="px-4 py-3">王五</td><td class="px-4 py-3">¥3,999.00</td><td class="px-4 py-3"><span class="rounded-full bg-blue-100 px-2 py-0.5 text-xs text-blue-700">已发货</span></td><td class="px-4 py-3 text-xs text-gray-400">06-21 08:30</td></tr>
+              <tr class="border-t hover:bg-gray-50"><td class="px-4 py-3 font-mono text-xs">202606201632-3087</td><td class="px-4 py-3">赵六</td><td class="px-4 py-3">¥299.00</td><td class="px-4 py-3"><span class="rounded-full bg-red-100 px-2 py-0.5 text-xs text-red-700">已取消</span></td><td class="px-4 py-3 text-xs text-gray-400">06-20 16:32</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>确认订单 - Mini Mall</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+  <header class="sticky top-0 z-50 bg-white border-b border-gray-200">
+    <div class="max-w-7xl mx-auto flex items-center justify-between h-16 px-4">
+      <a href="index.html" class="text-xl font-bold text-indigo-600">🛍️ Mini Mall</a>
+      <a href="cart.html" class="text-sm text-gray-600 hover:text-indigo-600">← 返回购物车</a>
+    </div>
+  </header>
+
+  <div class="max-w-3xl mx-auto px-4 py-8">
+    <h1 class="text-2xl font-bold text-gray-900">确认订单</h1>
+
+    <!-- Address -->
+    <div class="mt-6 rounded-xl border border-gray-200 bg-white p-6">
+      <div class="flex items-center justify-between mb-3"><h3 class="font-bold text-gray-900">收货地址</h3><button class="text-sm text-indigo-600">+ 新增地址</button></div>
+      <div class="space-y-2">
+        <label class="flex items-start gap-3 rounded-lg border border-indigo-500 bg-indigo-50 p-4 cursor-pointer">
+          <input type="radio" name="address" checked class="mt-1 accent-indigo-600">
+          <div><p class="text-sm font-medium text-gray-900">张三 <span class="text-gray-500 font-normal">13800138000</span></p><p class="text-xs text-gray-500 mt-0.5">北京市朝阳区建国路88号 SOHO现代城A座1201</p><span class="inline-block mt-1 rounded bg-indigo-100 px-1.5 py-0.5 text-xs text-indigo-600">默认</span></div>
+        </label>
+        <label class="flex items-start gap-3 rounded-lg border border-gray-200 p-4 cursor-pointer hover:bg-gray-50">
+          <input type="radio" name="address" class="mt-1 accent-indigo-600">
+          <div><p class="text-sm font-medium text-gray-900">张三 <span class="text-gray-500 font-normal">13912345678</span></p><p class="text-xs text-gray-500 mt-0.5">上海市浦东新区张江高科技园区碧波路690号</p></div>
+        </label>
+      </div>
+    </div>
+
+    <!-- Order Items -->
+    <div class="mt-4 rounded-xl border border-gray-200 bg-white p-6">
+      <h3 class="font-bold text-gray-900 mb-3">订单商品</h3>
+      <div class="space-y-3">
+        <div class="flex gap-3"><div class="h-16 w-16 shrink-0 rounded-lg bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center text-2xl">🎧</div><div class="flex-1"><p class="text-sm font-medium">无线蓝牙耳机 Pro</p><p class="text-xs text-gray-400">x1</p></div><span class="text-sm font-bold">¥299.00</span></div>
+        <div class="flex gap-3"><div class="h-16 w-16 shrink-0 rounded-lg bg-gradient-to-br from-green-100 to-green-200 flex items-center justify-center text-2xl">⌚</div><div class="flex-1"><p class="text-sm font-medium">智能手表 S8</p><p class="text-xs text-gray-400">x1</p></div><span class="text-sm font-bold">¥599.00</span></div>
+        <div class="flex gap-3"><div class="h-16 w-16 shrink-0 rounded-lg bg-gradient-to-br from-yellow-100 to-yellow-200 flex items-center justify-center text-2xl">🔌</div><div class="flex-1"><p class="text-sm font-medium">快充充电器 65W</p><p class="text-xs text-gray-400">x2</p></div><span class="text-sm font-bold">¥178.00</span></div>
+      </div>
+    </div>
+
+    <!-- Coupon -->
+    <div class="mt-4 rounded-xl border border-gray-200 bg-white p-6">
+      <div class="flex gap-3"><input type="text" placeholder="输入优惠码" class="flex-1 rounded-lg border px-3 py-2 text-sm"><button class="rounded-lg border border-indigo-600 px-4 py-2 text-sm text-indigo-600 hover:bg-indigo-50">使用</button></div>
+    </div>
+
+    <!-- Note -->
+    <div class="mt-4 rounded-xl border border-gray-200 bg-white p-6">
+      <textarea placeholder="订单备注（选填，最多200字）" class="w-full rounded-lg border px-3 py-2 text-sm" rows="2"></textarea>
+    </div>
+
+    <!-- Total -->
+    <div class="mt-4 rounded-xl border border-gray-200 bg-white p-6">
+      <div class="space-y-2 text-sm">
+        <div class="flex justify-between"><span class="text-gray-500">商品金额</span><span>¥1,076.00</span></div>
+        <div class="flex justify-between"><span class="text-gray-500">优惠券</span><span class="text-green-600">-¥50.00</span></div>
+        <div class="flex justify-between"><span class="text-gray-500">运费</span><span class="text-green-600">免运费</span></div>
+        <hr class="my-2">
+        <div class="flex justify-between text-lg font-bold"><span>实付金额</span><span class="text-red-600">¥1,026.00</span></div>
+      </div>
+      <button onclick="alert('下单成功！')" class="mt-4 block w-full rounded-lg bg-red-600 px-6 py-3 text-center font-medium text-white hover:bg-red-700 transition">提交订单</button>
+    </div>
+  </div>
+</body>
+</html>

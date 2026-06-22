@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>优惠券管理 - Mini Mall Admin</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+  <div class="flex">
+    <aside class="hidden lg:block fixed left-0 top-0 h-screen w-60 bg-gray-900 text-white">
+      <div class="flex h-16 items-center border-b border-gray-700 px-6"><a href="index.html" class="text-lg font-bold">🛍️ Mini Mall Admin</a></div>
+      <nav class="mt-4 space-y-1 px-3">
+        <a href="admin.html" class="flex items-center gap-3 rounded-lg px-4 py-2.5 text-sm text-gray-300 hover:bg-gray-800">📊 数据面板</a>
+        <a href="admin-products.html" class="flex items-center gap-3 rounded-lg px-4 py-2.5 text-sm text-gray-300 hover:bg-gray-800">📦 商品管理</a>
+        <a href="admin-categories.html" class="flex items-center gap-3 rounded-lg px-4 py-2.5 text-sm text-gray-300 hover:bg-gray-800">📂 分类管理</a>
+        <a href="admin-orders.html" class="flex items-center gap-3 rounded-lg px-4 py-2.5 text-sm text-gray-300 hover:bg-gray-800">📋 订单管理</a>
+        <a href="admin-users.html" class="flex items-center gap-3 rounded-lg px-4 py-2.5 text-sm text-gray-300 hover:bg-gray-800">👥 用户管理</a>
+        <a href="admin-coupons.html" class="flex items-center gap-3 rounded-lg bg-indigo-600 px-4 py-2.5 text-sm">🎫 优惠券管理</a>
+        <a href="admin-banners.html" class="flex items-center gap-3 rounded-lg px-4 py-2.5 text-sm text-gray-300 hover:bg-gray-800">🖼️ 轮播管理</a>
+        <a href="admin-reviews.html" class="flex items-center gap-3 rounded-lg px-4 py-2.5 text-sm text-gray-300 hover:bg-gray-800">⭐ 评价管理</a>
+      </nav>
+      <div class="absolute bottom-4 left-0 w-full px-3"><a href="index.html" class="flex items-center gap-3 rounded-lg px-4 py-2.5 text-sm text-gray-400 hover:bg-gray-800 hover:text-white">← 返回商城</a></div>
+    </aside>
+
+    <main class="flex-1 lg:ml-60 p-4 lg:p-8">
+      <header class="flex items-center justify-between bg-white rounded-xl border px-4 lg:px-8 py-4 mb-6">
+        <h1 class="text-lg font-semibold text-gray-800">🎫 优惠券管理</h1>
+        <button class="rounded-lg bg-indigo-600 px-4 py-2 text-sm text-white hover:bg-indigo-700" onclick="alert('新增优惠券（演示）')">+ 新增优惠券</button>
+      </header>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="rounded-xl border border-gray-200 bg-white p-6">
+          <div class="flex items-start justify-between">
+            <div>
+              <span class="rounded bg-red-100 px-2 py-0.5 text-xs font-medium text-red-600">满减券</span>
+              <h3 class="mt-2 text-lg font-bold text-gray-900">新人满100减20</h3>
+              <p class="text-sm text-gray-500 mt-1">券码: NEW100</p>
+            </div>
+            <span class="text-2xl font-bold text-red-600">-¥20</span>
+          </div>
+          <div class="mt-4 grid grid-cols-2 gap-2 text-xs text-gray-500">
+            <span>最低消费: ¥100.00</span><span>有效期至: 2026-12-31</span>
+            <span>已使用: 45 / 100</span><span>状态: <span class="text-green-600 font-medium">生效中</span></span>
+          </div>
+          <div class="mt-4 flex gap-2"><button class="text-indigo-600 text-xs hover:underline">编辑</button><button class="text-red-500 text-xs hover:underline">停用</button></div>
+        </div>
+        <div class="rounded-xl border border-gray-200 bg-white p-6">
+          <div class="flex items-start justify-between">
+            <div>
+              <span class="rounded bg-blue-100 px-2 py-0.5 text-xs font-medium text-blue-600">折扣券</span>
+              <h3 class="mt-2 text-lg font-bold text-gray-900">全场9折</h3>
+              <p class="text-sm text-gray-500 mt-1">券码: SALE10</p>
+            </div>
+            <span class="text-2xl font-bold text-red-600">10%OFF</span>
+          </div>
+          <div class="mt-4 grid grid-cols-2 gap-2 text-xs text-gray-500">
+            <span>最低消费: ¥0.00</span><span>有效期至: 2026-09-30</span>
+            <span>已使用: 230 / 500</span><span>状态: <span class="text-green-600 font-medium">生效中</span></span>
+          </div>
+          <div class="mt-4 flex gap-2"><button class="text-indigo-600 text-xs hover:underline">编辑</button><button class="text-red-500 text-xs hover:underline">停用</button></div>
+        </div>
+        <div class="rounded-xl border border-gray-200 bg-white p-6">
+          <div class="flex items-start justify-between">
+            <div>
+              <span class="rounded bg-red-100 px-2 py-0.5 text-xs font-medium text-red-600">满减券</span>
+              <h3 class="mt-2 text-lg font-bold text-gray-900">满500减50</h3>
+              <p class="text-sm text-gray-500 mt-1">券码: BIG50</p>
+            </div>
+            <span class="text-2xl font-bold text-red-600">-¥50</span>
+          </div>
+          <div class="mt-4 grid grid-cols-2 gap-2 text-xs text-gray-500">
+            <span>最低消费: ¥500.00</span><span>有效期至: 2026-12-31</span>
+            <span>已使用: 12 / 50</span><span>状态: <span class="text-green-600 font-medium">生效中</span></span>
+          </div>
+          <div class="mt-4 flex gap-2"><button class="text-indigo-600 text-xs hover:underline">编辑</button><button class="text-red-500 text-xs hover:underline">停用</button></div>
+        </div>
+        <div class="rounded-xl border border-gray-200 bg-white p-6 opacity-60">
+          <div class="flex items-start justify-between">
+            <div>
+              <span class="rounded bg-gray-200 px-2 py-0.5 text-xs font-medium text-gray-500">已过期</span>
+              <h3 class="mt-2 text-lg font-bold text-gray-900">618大促8折</h3>
+              <p class="text-sm text-gray-500 mt-1">券码: JUNE618</p>
+            </div>
+            <span class="text-2xl font-bold text-gray-400">20%OFF</span>
+          </div>
+          <div class="mt-4 grid grid-cols-2 gap-2 text-xs text-gray-500">
+            <span>最低消费: ¥200.00</span><span>有效期至: 2026-06-18</span>
+            <span>已使用: 180 / 200</span><span>状态: <span class="text-red-500">已过期</span></span>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>
